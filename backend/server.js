@@ -57,7 +57,7 @@ app.get("/api/analyze", async (req, res) => {
     const transactions = await Transaction.find({});
     
     // Analyze using graphService
-    const { nodes, edges, suspiciousNodes, alerts } = graphService.analyzeGraph(transactions);
+    const { nodes, edges, suspicious_nodes: suspiciousNodes, alerts } = await graphService.analyzeGraph(transactions);
     
     // Save new alerts
     for (const alertMsg of alerts) {
@@ -80,8 +80,8 @@ app.get("/api/analyze", async (req, res) => {
     });
 
     res.json({
-      nodes: nodes.map(n => n.id), // Simplify nodes format just for response initially, or format for UI
-      edges: edges.map(e => [e.source, e.target]),
+      nodes: nodes,
+      edges: edges,
       suspicious_nodes: suspiciousNodes,
       alerts: alerts,
       aiExplanation
@@ -95,7 +95,7 @@ app.get("/api/analyze", async (req, res) => {
 app.get("/api/dashboard-data", async (req, res) => {
   try {
     const transactions = await Transaction.find({});
-    const { nodes, edges, suspiciousNodes, alerts } = graphService.analyzeGraph(transactions);
+    const { nodes, edges, suspicious_nodes: suspiciousNodes, alerts } = await graphService.analyzeGraph(transactions);
     
     // Convert to target frontend format
     // The prompt specified Output JSON Format:
