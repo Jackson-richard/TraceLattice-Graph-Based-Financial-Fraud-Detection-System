@@ -146,14 +146,7 @@ The investigation dashboard provides:
 
 ---
 
-## Repository Structure
 
-```
-frontend/
-backend/
-dataset/
-README.md
-```
 
 ---
 
