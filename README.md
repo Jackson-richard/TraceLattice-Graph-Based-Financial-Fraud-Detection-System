@@ -1,34 +1,160 @@
 # TraceLattice – Graph-Based Financial Fraud Detection System
 
-A full-stack web application that detects suspicious financial transaction patterns by modeling transactions as a graph network.
+## Overview
 
-## Prerequisites
-- **Node.js**: Ensure Node.js is installed.
-- **MongoDB**: Ensure MongoDB is installed and running locally on the default port `27017`.
+TraceLattice is a **Graph-Based Financial Fraud Detection System** designed to identify suspicious transaction patterns within financial networks.
+Instead of analyzing transactions individually, the system models them as a **network graph** where accounts are nodes and transactions are edges.
+Using graph analytics and anomaly detection, TraceLattice uncovers hidden fraud patterns such as circular transactions, dense clusters of accounts, and rapid fund movements.
 
-## How to Run the Application
+---
 
-The application consists of two parts: the backend server and the frontend React application. You need to run both concurrently.
+## Problem
 
-### 1. Start the Backend Server
-Open a terminal, navigate to the `backend` directory, and run the server:
-```bash
-cd backend
-npm install   # Install dependencies (only needed the first time)
-node server.js
+Financial institutions process millions of transactions daily. Fraudsters exploit this scale by distributing illegal transactions across multiple accounts to conceal money flow.
+Traditional rule-based fraud detection systems struggle to detect **complex network relationships and coordinated transaction patterns**.
+
+---
+
+## Solution
+
+TraceLattice addresses this challenge by transforming transaction data into a **graph network** and applying advanced analytics techniques to detect suspicious activity.
+
+Key capabilities include:
+
+* Graph-based transaction network modeling
+* Fraud risk scoring
+* Unsupervised anomaly detection
+* Visual investigation dashboard
+* Explainable AI fraud reports
+
+---
+
+## System Architecture
+
 ```
-The backend server will start on `http://localhost:5000`.
-
-### 2. Start the Frontend Application
-Open a new, separate terminal, navigate to the `frontend` directory, and start the Vite development server:
-```bash
-cd frontend
-npm install   # Install dependencies (only needed the first time)
-npm run dev
+Transaction Dataset (CSV)
+        ↓
+Graph Construction (NetworkX)
+        ↓
+Graph Feature Extraction
+  • Degree Centrality
+  • Betweenness Centrality
+  • Transaction Frequency
+        ↓
+Risk Score Calculation
+        ↓
+Isolation Forest (Anomaly Detection)
+        ↓
+Fraud Pattern Detection
+        ↓
+Visualization Dashboard + AI Investigation Report
 ```
-The frontend application will be accessible at `http://localhost:5173`.
 
-### 3. Usage
-- Open your browser and navigate to `http://localhost:5173/`.
-- Go to the **Upload Data** page to upload a CSV dataset of transactions. A sample `test.csv` is provided in the `backend` folder for convenience.
-- Go to the **Dashboard** page to view the graph visualization and see any detected fraudulent patterns.
+---
+
+## Features
+
+* Interactive **transaction network visualization**
+* Detection of **circular transaction loops**
+* Identification of **high centrality accounts**
+* Detection of **dense transaction clusters**
+* **Fraud risk scoring system**
+* **AI-generated investigation reports**
+* CSV dataset upload interface
+* Fraud alert monitoring dashboard
+
+---
+
+## Technology Stack
+
+### Frontend
+
+* React
+* Cytoscape.js
+* TailwindCSS
+
+### Backend
+
+* Node.js / Python API
+* NetworkX (Graph Analysis)
+
+### Machine Learning
+
+* Isolation Forest (Anomaly Detection)
+
+### Database
+
+* MongoDB
+
+---
+
+## Dataset Format
+
+CSV file must contain the following columns:
+
+```
+sender,receiver,amount,timestamp
+```
+
+Example:
+
+```
+A,B,5000,2024-01-01
+B,C,4800,2024-01-01
+C,A,4700,2024-01-01
+```
+
+---
+
+## Fraud Patterns Detected
+
+TraceLattice detects several suspicious patterns:
+
+* Circular Transactions
+* High Centrality Accounts
+* Dense Transaction Clusters
+* Rapid Money Movement
+
+---
+
+## Dashboard
+
+The investigation dashboard provides:
+
+* Transaction network visualization
+* Fraud alert notifications
+* Suspicious account highlighting
+* AI-generated fraud explanations
+
+---
+
+## Use Cases
+
+* Banking fraud detection
+* Anti-money laundering monitoring
+* Financial investigation tools
+* Transaction network analysis
+
+---
+
+## Future Improvements
+
+* Graph Neural Networks for advanced fraud prediction
+* Real-time transaction monitoring
+* Integration with blockchain-based audit trails
+* Automated risk classification models
+
+---
+
+## Repository Structure
+
+```
+frontend/
+backend/
+dataset/
+README.md
+```
+
+---
+
+
