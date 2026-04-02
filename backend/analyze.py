@@ -26,9 +26,6 @@ def compute_metrics(transactions):
     betweenness_centrality = nx.betweenness_centrality(G)
     clustering = nx.clustering(G.to_undirected())
     
-    # Compute basic transaction stats per node
-    # Transaction frequency = out-degree + in-degree in MultiGraph? 
-    # Or sum of 'count' of edges
     node_stats = {}
     for node in G.nodes():
         tx_count = sum(d['count'] for _, _, d in G.in_edges(node, data=True)) + \
@@ -43,7 +40,6 @@ def compute_metrics(transactions):
             'average_transaction_amount': avg_amount
         }
         
-    # Prepare DataFrame for ML and Scoring
     features = []
     nodes = list(G.nodes())
     for node in nodes:
@@ -59,22 +55,19 @@ def compute_metrics(transactions):
     feature_df = pd.DataFrame(features).set_index('node')
     
     if len(feature_df) > 1:
-        # Normalize for Risk Scoring
         scaler = MinMaxScaler()
         normalized_df = pd.DataFrame(
             scaler.fit_transform(feature_df[['degree_centrality', 'betweenness_centrality', 'transaction_count']]),
             columns=['degree_centrality_norm', 'betweenness_centrality_norm', 'transaction_frequency_norm'],
             index=feature_df.index
         )
-        
-        # Risk Score Calculation
+       
         feature_df['risk_score'] = (
             0.4 * normalized_df['degree_centrality_norm'] +
             0.3 * normalized_df['betweenness_centrality_norm'] +
             0.3 * normalized_df['transaction_frequency_norm']
         )
         
-        # Anomaly Detection (Isolation Forest)
         ml_features = ['transaction_count', 'average_transaction_amount', 'degree_centrality', 'betweenness_centrality', 'cluster_density']
         X = feature_df[ml_features]
         clf = IsolationForest(contamination=0.1, random_state=42)
@@ -88,7 +81,7 @@ def compute_metrics(transactions):
         feature_df['is_anomaly'] = False
         feature_df['anomaly_score'] = 0.0
 
-    # Setup flags for new logic
+   
     smurfing_nodes = set()
     layering_nodes = set()
     layering_edges = set()
@@ -96,8 +89,7 @@ def compute_metrics(transactions):
     suspicious_nodes = set()
     alerts = []
     
-    # 1. Smurfing Detection
-    # Calculate out-degree threshold
+    
     out_degrees = [G.out_degree(n) for n in G.nodes()]
     avg_out_degree = sum(out_degrees) / len(out_degrees) if out_degrees else 0
     threshold = max(3, avg_out_degree * 2)
@@ -108,7 +100,7 @@ def compute_metrics(transactions):
             suspicious_nodes.add(node)
             alerts.append(f"Account {node} flagged as a smurfing hub (> {int(threshold)} outgoing transactions).")
             
-    # 2. Layering & Round-tripping Detection
+  
     try:
         cycles = list(nx.simple_cycles(G))
         for cycle in cycles:
@@ -122,27 +114,25 @@ def compute_metrics(transactions):
                     suspicious_nodes.add(u)
                     
                     if i == len(cycle) - 1:
-                        # The edge returning to the start of the detected cycle
+                       
                         round_trip_edges.add((u, v))
                     else:
                         layering_edges.add((u, v))
     except:
         pass
         
-    # 3. Dense transaction clusters
-    # High cluster density and high transaction count
+    
     dense_nodes = feature_df[(feature_df['cluster_density'] > 0.8) & (feature_df['transaction_count'] > 5)]
     for node in dense_nodes.index:
         suspicious_nodes.add(node)
         alerts.append(f"Account {node} is part of a dense transaction cluster.")
         
-    # 3. Anomaly from ML
     anomalous_nodes = feature_df[feature_df['is_anomaly']]
     for node in anomalous_nodes.index:
         suspicious_nodes.add(node)
         alerts.append(f"Account {node} flagged as an anomaly by ML model (Score: {feature_df.loc[node, 'anomaly_score']:.2f}).")
         
-    # 4. High Risk Score
+   
     high_risk_nodes = feature_df[feature_df['risk_score'] > 0.7]
     for node in high_risk_nodes.index:
         suspicious_nodes.add(node)
