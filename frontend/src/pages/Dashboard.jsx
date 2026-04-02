@@ -56,7 +56,7 @@ export default function Dashboard() {
         id: n.id,
         data: { ...n },
         style: {
-          r: size / 2, // G6 v5 uses 'r' for circle radius extensively
+          r: size / 2, 
           fill: fill,
           stroke: stroke,
           lineWidth: lineWidth,
@@ -73,7 +73,6 @@ export default function Dashboard() {
 
     const edgeCounts = {};
     const g6Edges = data.edges.map((e, i) => {
-      // Keep track of edges between the same nodes to curve them and prevent overlaps
       const edgeKey = e.source < e.target ? `${e.source}-${e.target}` : `${e.target}-${e.source}`;
       edgeCounts[edgeKey] = (edgeCounts[edgeKey] || 0) + 1;
       const isParallel = edgeCounts[edgeKey] > 1;
@@ -101,7 +100,7 @@ export default function Dashboard() {
           stroke: stroke,
           lineWidth: lineWidth,
           endArrow: true,
-          radius: 10, // smooth routing for polyline
+          radius: 10, 
           curveOffset: isParallel ? 30 : 0
         }
       };
@@ -116,12 +115,12 @@ export default function Dashboard() {
         edges: g6Edges
       },
       layout: {
-        type: 'fruchterman', // Extremely stable algorithm for clustered/star graphs, prevents stacking completely
+        type: 'fruchterman', 
         gravity: 2,
         speed: 5,
         clustering: true,
         preventOverlap: true,
-        nodeSize: 60, // Enforces spacing envelope
+        nodeSize: 60, 
       },
       modes: {
         default: ["drag-node", "zoom-canvas", "drag-canvas", "activate-relations"]
