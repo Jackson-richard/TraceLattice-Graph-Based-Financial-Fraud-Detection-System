@@ -28,7 +28,7 @@ function analyzeGraph(transactions) {
       }
     });
 
-    // Write transactions to Python script's stdin
+    
     pythonProcess.stdin.write(JSON.stringify(transactions));
     pythonProcess.stdin.end();
   });
