@@ -11,7 +11,6 @@ def compute_metrics(transactions):
         
     df = pd.DataFrame(transactions)
     
-    # Graph Construction
     G = nx.DiGraph()
     for _, row in df.iterrows():
         sender = row['sender']
@@ -23,7 +22,6 @@ def compute_metrics(transactions):
         else:
             G.add_edge(sender, receiver, weight=amount, count=1)
             
-    # Node features
     degree_centrality = nx.degree_centrality(G)
     betweenness_centrality = nx.betweenness_centrality(G)
     clustering = nx.clustering(G.to_undirected())
