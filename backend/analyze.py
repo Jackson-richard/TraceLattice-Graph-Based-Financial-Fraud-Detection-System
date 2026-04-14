@@ -71,9 +71,8 @@ def compute_metrics(transactions):
         ml_features = ['transaction_count', 'average_transaction_amount', 'degree_centrality', 'betweenness_centrality', 'cluster_density']
         X = feature_df[ml_features]
         clf = IsolationForest(contamination=0.1, random_state=42)
-        # Note: fit_predict returns -1 for outliers and 1 for inliers.
         preds = clf.fit_predict(X)
-        anomaly_scores = clf.decision_function(X) # lower is more anomalous
+        anomaly_scores = clf.decision_function(X) 
         feature_df['is_anomaly'] = preds == -1
         feature_df['anomaly_score'] = anomaly_scores
     else:
@@ -138,7 +137,7 @@ def compute_metrics(transactions):
         suspicious_nodes.add(node)
         alerts.append(f"Account {node} has a high fraud risk score ({feature_df.loc[node, 'risk_score']:.2f}).")
         
-    # Prepare output format
+   
     out_nodes = []
     for node in nodes:
         node_role = "normal"
