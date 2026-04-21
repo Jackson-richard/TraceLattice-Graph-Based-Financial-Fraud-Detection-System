@@ -67,7 +67,6 @@ app.get("/api/analyze", async (req, res) => {
       });
     }
 
-    // AI Investigation short explanation
     const aiExplanation = `Detected ${suspiciousNodes.length} suspicious accounts involved in complex routing such as cyclic movements or high-density transfers. Further investigation is recommended for: ${suspiciousNodes.slice(0, 5).join(", ")}.`;
     
     await InvestigationReport.create({
