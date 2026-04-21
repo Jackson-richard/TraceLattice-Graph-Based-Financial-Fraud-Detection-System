@@ -31,7 +31,6 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   fs.createReadStream(req.file.path)
     .pipe(csvParser())
     .on("data", (data) => {
-      // Validate data maybe?
       if (data.sender && data.receiver && data.amount && data.timestamp) {
         results.push({
           sender: data.sender,
