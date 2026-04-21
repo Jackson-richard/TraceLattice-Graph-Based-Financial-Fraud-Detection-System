@@ -94,10 +94,6 @@ app.get("/api/dashboard-data", async (req, res) => {
     const transactions = await Transaction.find({});
     const { nodes, edges, suspicious_nodes: suspiciousNodes, alerts } = await graphService.analyzeGraph(transactions);
     
-    // Convert to target frontend format
-    // The prompt specified Output JSON Format:
-    // { "nodes": ["A","B","C"], "edges": [["A","B"],["B","C"],["C","A"]], "suspicious_nodes": ["B"], "alerts": [] }
-    
     const latestReport = await InvestigationReport.findOne().sort({ generated_at: -1 });
 
     res.json({
