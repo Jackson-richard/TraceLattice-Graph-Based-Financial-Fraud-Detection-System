@@ -56,7 +56,7 @@ app.get("/api/analyze", async (req, res) => {
   try {
     const transactions = await Transaction.find({});
     
-    // Analyze using graphService
+    
     const { nodes, edges, suspicious_nodes: suspiciousNodes, alerts } = await graphService.analyzeGraph(transactions);
     
     // Save new alerts
