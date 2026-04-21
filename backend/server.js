@@ -59,7 +59,6 @@ app.get("/api/analyze", async (req, res) => {
     
     const { nodes, edges, suspicious_nodes: suspiciousNodes, alerts } = await graphService.analyzeGraph(transactions);
     
-    // Save new alerts
     for (const alertMsg of alerts) {
       await FraudAlert.create({
         alert_type: "Graph Pattern",
