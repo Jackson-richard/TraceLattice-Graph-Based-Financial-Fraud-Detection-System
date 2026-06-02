@@ -179,7 +179,7 @@ def compute_metrics(transactions):
         "nodes": out_nodes,
         "edges": out_edges,
         "suspicious_nodes": list(suspicious_nodes),
-        "alerts": list(set(alerts)) # unique alerts
+        "alerts": list(set(alerts))
     }
     
     return result
