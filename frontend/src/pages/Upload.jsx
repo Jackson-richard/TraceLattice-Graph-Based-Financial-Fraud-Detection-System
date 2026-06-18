@@ -41,7 +41,7 @@ export default function Upload() {
       setMessage(`Success: ${res.data.count} transactions processed.`);
       setSuccess(true);
       
-      // Trigger an analysis after upload
+      
       await axios.get("http://localhost:5000/api/analyze");
       
     } catch (err) {
