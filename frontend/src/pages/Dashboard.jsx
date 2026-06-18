@@ -257,7 +257,6 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* Graph Legend Panel */}
           <div style={{ position: 'absolute', top: '20px', right: '20px', background: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(8px)', padding: '1rem', borderRadius: '8px', border: '1px solid #334155', boxShadow: '0 4px 12px rgba(0,0,0,0.5)', zIndex: 10, fontSize: '0.85rem' }}>
             <h4 style={{ marginBottom: '0.5rem', color: '#f8fafc', borderBottom: '1px solid #334155', paddingBottom: '0.25rem', fontWeight: '600' }}>Fraud Topology</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
