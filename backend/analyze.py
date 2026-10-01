@@ -2,7 +2,6 @@ import sys
 import json
 import networkx as nx
 import pandas as pd
-from sklearn.ensemble import IsolationForest
 
 def compute_metrics(transactions):
     if not transactions:
