@@ -3,7 +3,6 @@ import json
 import networkx as nx
 import pandas as pd
 from sklearn.ensemble import IsolationForest
-from sklearn.preprocessing import MinMaxScaler
 
 def compute_metrics(transactions):
     if not transactions:
