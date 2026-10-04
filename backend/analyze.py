@@ -3,10 +3,7 @@ import json
 import networkx as nx
 import pandas as pd
 
-
-    df = pd.DataFrame(transactions)
-    
-    G = nx.DiGraph()
+  G = nx.DiGraph()
     for _, row in df.iterrows():
         sender = row['sender']
         receiver = row['receiver']
