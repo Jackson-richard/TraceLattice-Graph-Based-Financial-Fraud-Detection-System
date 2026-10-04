@@ -3,10 +3,7 @@ import json
 import networkx as nx
 import pandas as pd
 
-def compute_metrics(transactions):
-    if not transactions:
-        return {"nodes": [], "edges": [], "suspicious_nodes": [], "alerts": []}
-        
+
     df = pd.DataFrame(transactions)
     
     G = nx.DiGraph()
